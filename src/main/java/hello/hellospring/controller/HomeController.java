@@ -1,7 +1,12 @@
 package hello.hellospring.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -12,4 +17,32 @@ public class HomeController {
     public String home() {
         return "home";
     }
+
+
+    // get 방식 + 파라미터
+    @GetMapping("market-list")
+    public String helloMvc(
+//            @RequestParam("category_list") String marketList,
+            @RequestParam("category_list") List<String> marketList,
+            Model model
+    ) {
+        model.addAttribute("list", marketList);
+        return "markets/market-list";
+    }
+
+    @GetMapping("/a-1")
+    public String a1(@RequestParam("data") List<String> param, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addAttribute("data", param);
+
+        return "redirect:/b-1";
+    }
+
+    @GetMapping("/b-1")
+    public String b1(@RequestParam("data") String data, Model model) {
+        // 여기에서 param을 활용하여 화면을 구성
+        model.addAttribute("data", data); // 모델에 파라미터 추가
+        return "markets/b-1-view"; // 화면 이름 반환
+    }
+
+
 }
