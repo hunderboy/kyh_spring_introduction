@@ -38,7 +38,7 @@ public class HomeController {
     }
 
     @GetMapping("/b-1")
-    public String b1(@RequestParam("data") String data, Model model) {
+    public String b1(@RequestParam("data") List<String> data, Model model) {
         // 여기에서 param을 활용하여 화면을 구성
         model.addAttribute("data", data); // 모델에 파라미터 추가
         return "markets/b-1-view"; // 화면 이름 반환
